@@ -5,13 +5,20 @@ let firstNumber;
 let selectedOperator;
 
 // Display number inputs
+// Select all number buttons
 const numButtons = document.querySelectorAll(".num");
+// Add function
 numButtons.forEach((numButton) => {
   numButton.addEventListener("click", () => {
+    // clear a 0
     if (dispVal === 0) {
       dispVal = "";
     }
-    dispVal = dispVal + "" + numButton.id;
+    // display length limiter
+    if (dispVal.length < 8) {
+      dispVal = dispVal + "" + numButton.id;
+    }
+    //update display
     display.textContent = dispVal;
   });
 });
@@ -57,8 +64,8 @@ opButtons.forEach((opButton) => {
 // Basic operator functions
 
 function add(a, b) {
-  let num1 = parseInt(a);
-  let num2 = parseInt(b);
+  let num1 = parseFloat(a);
+  let num2 = parseFloat(b);
   return num1 + num2;
 }
 
@@ -71,14 +78,69 @@ function mul(a, b) {
 }
 
 function div(a, b) {
-  return a / b;
+  if (a == 0 || b == 0) {
+    return "Please...";
+  } else {
+    return a / b;
+  }
 }
 
 // evaluate
-const equalsButton = document.querySelector(".equals");
+const equalsButton = document.querySelector("#equals");
 equalsButton.addEventListener("click", () => {
-  // call operate function on operator, first number and dispVal
-  const result = operate(selectedOperator, firstNumber, dispVal);
-  // display result
-  display.textContent = result;
+  // check if operator has been selected
+  if (selectedOperator !== undefined) {
+    // call operate function on operator, first number and dispVal
+    const result = operate(selectedOperator, firstNumber, dispVal);
+    // display result
+    display.textContent = result;
+    selectedOperator = undefined;
+    firstNumber = undefined;
+    dispVal = result + "";
+  }
+});
+
+// Clear
+const clearButton = document.querySelector("#clear");
+clearButton.addEventListener("click", () => {
+  dispVal = 0;
+  operator = undefined;
+  firstNumber = undefined;
+  selectedOperator = undefined;
+  display.textContent = dispVal;
+});
+
+// decimal
+const decButton = document.querySelector("#dec");
+decButton.addEventListener("click", () => {
+  if (dispVal.includes(".") == false) {
+    dispVal = dispVal + ".";
+    display.textContent = dispVal;
+  }
+});
+
+// percent
+const perButton = document.querySelector("#per");
+perButton.addEventListener("click", () => {
+  dispVal = dispVal / 100;
+  display.textContent = dispVal;
+});
+
+// negative
+const negButton = document.querySelector("#neg");
+negButton.addEventListener("click", () => {
+  dispVal = dispVal * -1;
+  display.textContent = dispVal;
+});
+
+// backspace
+const backButton = document.querySelector("#back");
+backButton.addEventListener("click", () => {
+  if (dispVal.length <= 1) {
+    dispVal = 0;
+  } else {
+    dispVal = dispVal.slice(0, -1);
+  }
+  display.textContent = dispVal;
+  //   dispVal = sliced;
 });
