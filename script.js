@@ -16,7 +16,9 @@ numButtons.forEach((numButton) => {
     }
     // display length limiter
     if (dispVal.length < 8) {
-      dispVal = dispVal + "" + numButton.id;
+      // get number from HTML id (b5>5)
+      let a = numButton.id.slice(1, 2);
+      dispVal = dispVal + "" + a;
     }
     //update display
     display.textContent = dispVal;
