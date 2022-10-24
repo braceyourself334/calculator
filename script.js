@@ -15,6 +15,13 @@ const negButton = document.querySelector("#neg");
 const perButton = document.querySelector("#per");
 
 // Button Listeners
+window.addEventListener("keydown", keyboardInput);
+clearButton.addEventListener("click", clear);
+decButton.addEventListener("click", decimal);
+perButton.addEventListener("click", percent);
+negButton.addEventListener("click", negative);
+backButton.addEventListener("click", backspace);
+equalsButton.addEventListener("click", equals);
 
 numButtons.forEach((numButton) =>
   numButton.addEventListener("click", () => numInput(numButton.textContent))
@@ -51,6 +58,41 @@ function opSelection(operator) {
   selectedOperator = operator;
   firstNumber = dispVal;
   dispVal = 0;
+}
+
+// Function buttons
+function clear() {
+  dispVal = 0;
+  operator = undefined;
+  firstNumber = undefined;
+  selectedOperator = undefined;
+  display.textContent = dispVal;
+}
+
+function decimal() {
+  if (dispVal.includes(".") == false) {
+    dispVal = dispVal + ".";
+    display.textContent = dispVal;
+  }
+}
+
+function percent() {
+  dispVal = dispVal / 100;
+  display.textContent = dispVal;
+}
+
+function negative() {
+  dispVal = dispVal * -1 + "";
+  display.textContent = dispVal;
+}
+
+function backspace() {
+  if (dispVal.length <= 1) {
+    dispVal = 0;
+  } else {
+    dispVal = dispVal.slice(0, -1);
+  }
+  display.textContent = dispVal;
 }
 
 // Calculation
@@ -91,7 +133,7 @@ function div(a, b) {
 }
 
 // evaluate
-equalsButton.addEventListener("click", () => {
+function equals() {
   // check if operator has been selected
   if (selectedOperator !== undefined) {
     // call operate function on operator, first number and dispVal
@@ -102,47 +144,7 @@ equalsButton.addEventListener("click", () => {
     firstNumber = undefined;
     dispVal = result + "";
   }
-});
-
-// Clear
-clearButton.addEventListener("click", () => {
-  dispVal = 0;
-  operator = undefined;
-  firstNumber = undefined;
-  selectedOperator = undefined;
-  display.textContent = dispVal;
-});
-
-// decimal
-decButton.addEventListener("click", () => {
-  if (dispVal.includes(".") == false) {
-    dispVal = dispVal + ".";
-    display.textContent = dispVal;
-  }
-});
-
-// percent
-perButton.addEventListener("click", () => {
-  dispVal = dispVal / 100;
-  display.textContent = dispVal;
-});
-
-// negative
-negButton.addEventListener("click", () => {
-  dispVal = dispVal * -1;
-  display.textContent = dispVal;
-});
-
-// backspace
-backButton.addEventListener("click", () => {
-  if (dispVal.length <= 1) {
-    dispVal = 0;
-  } else {
-    dispVal = dispVal.slice(0, -1);
-  }
-  display.textContent = dispVal;
-  //   dispVal = sliced;
-});
+}
 
 // keyboard functionality
 // window.addEventListener("keydown", keyboardInput);
