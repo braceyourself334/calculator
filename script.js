@@ -20,9 +20,9 @@ numButtons.forEach((numButton) =>
   numButton.addEventListener("click", () => numInput(numButton.textContent))
 );
 
-// opButtons.forEach((opButton) =>
-//   opButton.addEventListener("click", () => opSelection(opButton.textContent))
-// );
+opButtons.forEach((opButton) =>
+  opButton.addEventListener("click", () => opSelection(opButton.id))
+);
 
 // Number input
 function numInput(number) {
@@ -33,6 +33,24 @@ function numInput(number) {
     dispVal = dispVal + "" + number;
   }
   display.textContent = dispVal;
+}
+
+// Operator Selection
+function opSelection(operator) {
+  // if not first number, calculate
+  if (firstNumber !== undefined) {
+    const result = operate(
+      selectedOperator,
+      parseFloat(firstNumber),
+      parseFloat(dispVal)
+    );
+    display.textContent = result;
+    dispVal = result;
+  }
+  // Otherwise store operator and number
+  selectedOperator = operator;
+  firstNumber = dispVal;
+  dispVal = 0;
 }
 
 // Calculation
@@ -48,30 +66,6 @@ function operate(operator, a, b) {
     return div(a, b);
   }
 }
-
-// Operator buttons
-opButtons.forEach((opButton) => {
-  // after each operator click
-  opButton.addEventListener("click", () => {
-    // if firstNumber is not undefined then
-    if (firstNumber !== undefined) {
-      // call the selected operator function
-      const result = operate(
-        selectedOperator,
-        parseInt(firstNumber),
-        parseInt(dispVal)
-      );
-      display.textContent = result;
-      dispVal = result;
-    }
-    // store which operator was clicked
-    selectedOperator = opButton.id;
-    // store the first number in a variable
-    firstNumber = dispVal;
-    // set display value to 0
-    dispVal = 0;
-  });
-});
 
 // Basic operator functions
 function add(a, b) {
