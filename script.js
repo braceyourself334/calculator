@@ -126,7 +126,7 @@ function mul(a, b) {
 
 function div(a, b) {
   if (a == 0 || b == 0) {
-    return "Please...";
+    return "You are SMRT";
   } else {
     return a / b;
   }
@@ -146,19 +146,14 @@ function equals() {
   }
 }
 
-// keyboard functionality
-// window.addEventListener("keydown", keyboardInput);
-// function keyboardInput(e) {
-//   if (e.key >= 0 && e.key <= 9) {
-//     if (dispVal === 0) {
-//       // clear a 0
-//       dispVal = "";
-//     }
-//     // display length limiter
-//     if (dispVal.length < 8) {
-//       dispVal = dispVal + "" + e.key;
-//     }
-//     //update display
-//     display.textContent = dispVal;
-//   }
-// }
+function keyboardInput(e) {
+  if (e.key >= 0 && e.key <= 9) numInput(e.key);
+  if (e.key === ".") decimal();
+  if (e.key === "=") equals();
+  if (e.key === "Backspace") backspace();
+  if (e.key === "Escape") clear();
+  if (e.key === "+") opSelection(add);
+  if (e.key === "-") opSelection(sub);
+  if (e.key === "*") opSelection(mul);
+  if (e.key === "/") opSelection(div);
+}
