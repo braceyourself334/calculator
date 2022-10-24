@@ -31,6 +31,18 @@ opButtons.forEach((opButton) =>
   opButton.addEventListener("click", () => opSelection(opButton.id))
 );
 
+function keyboardInput(e) {
+  if (e.key >= 0 && e.key <= 9) numInput(e.key);
+  if (e.key === ".") decimal();
+  if (e.key === "=") equals();
+  if (e.key === "Backspace") backspace();
+  if (e.key === "Escape") clear();
+  if (e.key === "+") opSelection(add);
+  if (e.key === "-") opSelection(sub);
+  if (e.key === "*") opSelection(mul);
+  if (e.key === "/") opSelection(div);
+}
+
 // Number input
 function numInput(number) {
   if (dispVal === 0) {
@@ -144,16 +156,4 @@ function equals() {
     firstNumber = undefined;
     dispVal = result + "";
   }
-}
-
-function keyboardInput(e) {
-  if (e.key >= 0 && e.key <= 9) numInput(e.key);
-  if (e.key === ".") decimal();
-  if (e.key === "=") equals();
-  if (e.key === "Backspace") backspace();
-  if (e.key === "Escape") clear();
-  if (e.key === "+") opSelection(add);
-  if (e.key === "-") opSelection(sub);
-  if (e.key === "*") opSelection(mul);
-  if (e.key === "/") opSelection(div);
 }
