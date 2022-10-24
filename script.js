@@ -1,30 +1,41 @@
 let operator;
 let dispVal = 0;
-const display = document.getElementById("display");
 let firstNumber;
 let selectedOperator;
 
-// Display number inputs
-// Select all number buttons
+// Button Selectors
+const display = document.getElementById("display");
 const numButtons = document.querySelectorAll(".num");
-// Add function
-numButtons.forEach((numButton) => {
-  numButton.addEventListener("click", () => {
-    // clear a 0
-    if (dispVal === 0) {
-      dispVal = "";
-    }
-    // display length limiter
-    if (dispVal.length < 8) {
-      // get number from HTML id (b5>5)
-      let a = numButton.id.slice(1, 2);
-      dispVal = dispVal + "" + a;
-    }
-    //update display
-    display.textContent = dispVal;
-  });
-});
+const opButtons = document.querySelectorAll(".op");
+const equalsButton = document.querySelector("#equals");
+const clearButton = document.querySelector("#clear");
+const backButton = document.querySelector("#back");
+const decButton = document.querySelector("#dec");
+const negButton = document.querySelector("#neg");
+const perButton = document.querySelector("#per");
 
+// Button Listeners
+
+numButtons.forEach((numButton) =>
+  numButton.addEventListener("click", () => numInput(numButton.textContent))
+);
+
+// opButtons.forEach((opButton) =>
+//   opButton.addEventListener("click", () => opSelection(opButton.textContent))
+// );
+
+// Number input
+function numInput(number) {
+  if (dispVal === 0) {
+    dispVal = "";
+  }
+  if (dispVal.length < 8) {
+    dispVal = dispVal + "" + number;
+  }
+  display.textContent = dispVal;
+}
+
+// Calculation
 // Take an operator and 2 numbers and call operator functions on the numbers.
 function operate(operator, a, b) {
   if (operator === "add") {
@@ -39,7 +50,6 @@ function operate(operator, a, b) {
 }
 
 // Operator buttons
-const opButtons = document.querySelectorAll(".op");
 opButtons.forEach((opButton) => {
   // after each operator click
   opButton.addEventListener("click", () => {
@@ -64,7 +74,6 @@ opButtons.forEach((opButton) => {
 });
 
 // Basic operator functions
-
 function add(a, b) {
   let num1 = parseFloat(a);
   let num2 = parseFloat(b);
@@ -88,7 +97,6 @@ function div(a, b) {
 }
 
 // evaluate
-const equalsButton = document.querySelector("#equals");
 equalsButton.addEventListener("click", () => {
   // check if operator has been selected
   if (selectedOperator !== undefined) {
@@ -103,7 +111,6 @@ equalsButton.addEventListener("click", () => {
 });
 
 // Clear
-const clearButton = document.querySelector("#clear");
 clearButton.addEventListener("click", () => {
   dispVal = 0;
   operator = undefined;
@@ -113,7 +120,6 @@ clearButton.addEventListener("click", () => {
 });
 
 // decimal
-const decButton = document.querySelector("#dec");
 decButton.addEventListener("click", () => {
   if (dispVal.includes(".") == false) {
     dispVal = dispVal + ".";
@@ -122,21 +128,18 @@ decButton.addEventListener("click", () => {
 });
 
 // percent
-const perButton = document.querySelector("#per");
 perButton.addEventListener("click", () => {
   dispVal = dispVal / 100;
   display.textContent = dispVal;
 });
 
 // negative
-const negButton = document.querySelector("#neg");
 negButton.addEventListener("click", () => {
   dispVal = dispVal * -1;
   display.textContent = dispVal;
 });
 
 // backspace
-const backButton = document.querySelector("#back");
 backButton.addEventListener("click", () => {
   if (dispVal.length <= 1) {
     dispVal = 0;
@@ -146,3 +149,20 @@ backButton.addEventListener("click", () => {
   display.textContent = dispVal;
   //   dispVal = sliced;
 });
+
+// keyboard functionality
+// window.addEventListener("keydown", keyboardInput);
+// function keyboardInput(e) {
+//   if (e.key >= 0 && e.key <= 9) {
+//     if (dispVal === 0) {
+//       // clear a 0
+//       dispVal = "";
+//     }
+//     // display length limiter
+//     if (dispVal.length < 8) {
+//       dispVal = dispVal + "" + e.key;
+//     }
+//     //update display
+//     display.textContent = dispVal;
+//   }
+// }
